@@ -379,8 +379,18 @@ body {
   font-size: 1.3em !important;
   font-weight: bold !important;
   color: rgba(255, 215, 0, 1) !important;
-  margin-bottom: 15px !important;
+  margin-bottom: 10px !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9) !important;
+}
+
+.donate-alias {
+  font-family: 'Russo One', arial, sans-serif !important;
+  font-size: 1em !important;
+  font-weight: normal !important;
+  color: white !important;
+  margin-bottom: 15px !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
+  letter-spacing: 0.05em;
 }
 
 .donate-image {
@@ -515,6 +525,14 @@ body {
     max-width: 200px;
   }
   
+  .donate-title {
+    font-size: 1.1em !important;
+  }
+  
+  .donate-alias {
+    font-size: 0.9em !important;
+  }
+  
   .greeting-modal__close-btn {
     font-size: 0.9em;
     padding: 10px 30px;
@@ -546,6 +564,14 @@ body {
   
   .donate-image {
     max-width: 180px;
+  }
+  
+  .donate-title {
+    font-size: 1em !important;
+  }
+  
+  .donate-alias {
+    font-size: 0.85em !important;
   }
   
   .greeting-modal__close-btn {
