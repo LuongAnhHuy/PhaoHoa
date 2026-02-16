@@ -87,6 +87,281 @@ body {
           transform: translateZ(0);
 }
 
+.title-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Dancing Script', cursive;
+  font-size: 4.5em;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(255, 215, 0, 0.2),
+    2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(255, 215, 0, 0.2),
+      2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  to {
+    text-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.5),
+      0 0 25px rgba(255, 215, 0, 0.3),
+      2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media (max-width: 840px) {
+  .title-text {
+    font-size: 3em;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-text {
+    font-size: 2em;
+  }
+}
+
+.greeting-btn-container {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.greeting-btn {
+  padding: 12px 30px;
+  font-family: 'Russo One', arial, sans-serif;
+  font-size: 1.1em;
+  color: white;
+  background: linear-gradient(135deg, rgba(220, 20, 20, 0.8), rgba(255, 180, 0, 0.8));
+  border: 2px solid rgba(255, 215, 0, 0.8);
+  border-radius: 25px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(220, 20, 20, 0.5);
+  transition: all 0.3s ease;
+}
+
+.greeting-btn:hover {
+  background: linear-gradient(135deg, rgba(220, 20, 20, 1), rgba(255, 180, 0, 1));
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.7);
+  transform: translateY(-2px);
+}
+
+.greeting-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  visibility: hidden;
+  z-index: 1000;
+  transition: visibility 0.3s;
+}
+
+.greeting-modal.active {
+  visibility: visible;
+}
+
+.greeting-modal__overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.greeting-modal.active .greeting-modal__overlay {
+  opacity: 1;
+}
+
+.greeting-modal__dialog {
+  position: relative;
+  max-width: 600px;
+  width: 45%;
+  aspect-ratio: 16/9;
+  padding: 0;
+  background-image: url('image/image.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  border: 4px solid rgba(255, 215, 0, 1);
+  box-shadow: 0 10px 40px rgba(220, 20, 20, 0.6), 0 0 30px rgba(255, 215, 0, 0.4);
+  overflow: hidden;
+}
+
+.greeting-modal__content-wrapper {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  max-width: 1200px;
+  width: 90%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease-out;
+}
+
+.greeting-modal.active .greeting-modal__content-wrapper {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.greeting-modal__poem {
+  flex: 1;
+  max-width: 500px;
+  padding: 30px;
+  background: linear-gradient(135deg, rgba(220, 20, 20, 0.95), rgba(255, 180, 0, 0.95));
+  border-radius: 20px;
+  border: 4px solid rgba(255, 215, 0, 1);
+  box-shadow: 0 10px 40px rgba(220, 20, 20, 0.6), 0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+.greeting-modal__poem p {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.5em;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  line-height: 1.6;
+  margin: 8px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.greeting-modal__dialog::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  border-radius: 17px;
+  pointer-events: none;
+}
+
+.greeting-modal.active .greeting-modal__dialog {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.greeting-modal__close-btn {
+  position: relative;
+  margin-top: 20px;
+  padding: 12px 40px;
+  font-family: 'Russo One', arial, sans-serif;
+  font-size: 1.1em;
+  color: white;
+  background: linear-gradient(135deg, rgba(220, 20, 20, 0.9), rgba(255, 180, 0, 0.9));
+  border: 2px solid rgba(255, 215, 0, 1);
+  border-radius: 25px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(220, 20, 20, 0.5);
+  transition: all 0.3s ease;
+  z-index: 1001;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.greeting-modal.active .greeting-modal__close-btn {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+.greeting-modal__close-btn:hover {
+  background: linear-gradient(135deg, rgba(220, 20, 20, 1), rgba(255, 180, 0, 1));
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.7);
+  transform: translateY(-2px);
+}
+
+.greeting-modal__close-btn:hover {
+  transform: scale(1.2);
+}
+
+.greeting-modal__header {
+  position: relative;
+  z-index: 10;
+  font-family: 'Dancing Script', cursive;
+  font-size: 3em;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  margin-bottom: 25px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  display: none;
+}
+
+.greeting-modal__body {
+  position: relative;
+  z-index: 10;
+  font-family: 'Russo One', arial, sans-serif;
+  font-size: 1.4em;
+  color: white;
+  text-align: center;
+  line-height: 1.8;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  display: none;
+}
+
+.greeting-modal__body p {
+  margin: 10px 0;
+}
+
+@media (max-width: 840px) {
+  .greeting-btn {
+    font-size: 0.9em;
+    padding: 10px 25px;
+  }
+  
+  .greeting-modal__content-wrapper {
+    flex-direction: column;
+    width: 95%;
+  }
+  
+  .greeting-modal__dialog {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .greeting-modal__poem {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .greeting-modal__poem p {
+    font-size: 1.2em;
+  }
+  
+  .greeting-modal__close-btn {
+    font-size: 0.9em;
+    padding: 10px 30px;
+  }
+}
+
 .controls {
   position: absolute;
   top: 0;

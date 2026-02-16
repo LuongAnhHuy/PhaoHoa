@@ -12,7 +12,9 @@
 	<link rel="apple-touch-icon-precomposed" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/firework-burst-icon-v2.png">
 	<meta name="msapplication-TileColor" content="#000000">
 	<meta name="msapplication-TileImage" content="https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/firework-burst-icon-v2.png">
-	<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 	<link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -41,6 +43,11 @@
 	</svg>
 </div>
 
+<!-- Background Music - Simple Audio Player -->
+<audio id="background-music" loop preload="auto">
+	<source id="audio-source" src="music/Happy New Year.mp3" type="audio/mpeg">
+</audio>
+
 <!-- App -->
 <div class="container">
 	<div class="loading-init">
@@ -51,6 +58,7 @@
 		<div class="canvas-container">
 			<canvas id="trails-canvas"></canvas>
 			<canvas id="main-canvas"></canvas>
+			<div class="title-text">Happy Lunar New Year</div>
 		</div>
 		<div class="controls">
 			<div class="btn pause-btn">
@@ -62,6 +70,9 @@
 			<div class="btn settings-btn">
 				<svg fill="white" width="24" height="24"><use href="#icon-settings" xlink:href="#icon-settings"></use></svg>
 			</div>
+		</div>
+		<div class="greeting-btn-container">
+			<button class="greeting-btn">Lời Chúc Tết</button>
 		</div>
 		<div class="menu hide">
 			<div class="menu__inner-wrap">
@@ -90,6 +101,19 @@
 					<div class="form-option form-option--select">
 						<label class="scaleFactor-label">Scale</label>
 						<select class="scaleFactor"></select>
+					</div>
+					<div class="form-option" style="margin: 20px 0;">
+						<label style="width: 100%; text-align: center; margin-bottom: 8px;">Background Music</label>
+						<input type="file" id="music-file-input" accept="audio/*"
+							style="width: 100%; padding: 8px; font-size: 0.9em; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 4px; cursor: pointer;" />
+						<div style="text-align: center; margin: 8px 0; color: rgba(255,255,255,0.5); font-size: 0.8em;">OR</div>
+						<input type="text" id="music-url-input" placeholder="Paste MP3 URL here" 
+							style="width: 100%; padding: 8px; font-size: 0.9em; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 4px;" 
+							value="music/Happy New Year.mp3" />
+						<button type="button" id="load-music-btn" 
+							style="width: 100%; margin-top: 8px; padding: 8px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; cursor: pointer; border-radius: 4px; font-family: 'Russo One', arial, sans-serif; letter-spacing: 0.06em;">
+							LOAD URL
+						</button>
 					</div>
 					<div class="form-option form-option--checkbox">
 						<label class="auto-launch-label">Auto Fire</label>
@@ -126,11 +150,173 @@
 			<button type="button" class="help-modal__close-btn">Close</button>
 		</div>
 	</div>
+	
+	<div class="greeting-modal">
+		<div class="greeting-modal__overlay"></div>
+		<div class="greeting-modal__content-wrapper">
+			<div class="greeting-modal__dialog"></div>
+			<div class="greeting-modal__poem">
+				<p>Xuân về gõ cửa hiên nhà</p>
+				<p>Bính Ngọ rực lửa, nở hoa đất trời</p>
+				<p>Ngựa phi vạn dặm thảnh thơi</p>
+				<p>Mang theo tài lộc, rạng ngời niềm tin</p>
+				<p>Một năm bứt tốc thần kỳ</p>
+				<p>Công danh rộng mở, bước đi vững vàng</p>
+				<p>Gia đình hạnh phúc an khang</p>
+				<p>Tiền vào như nước, lộc vàng đầy tay</p>
+				<p>Chúc cho năm mới thêm may</p>
+				<p>Tâm an – chí lớn – tháng ngày thành công 🐎✨</p>
+			</div>
+		</div>
+		<button class="greeting-modal__close-btn">CLOSE</button>
+	</div>
 </div>
 <!-- partial -->
 <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/fscreen%401.0.1.js'></script>
 <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/Stage%400.1.4.js'></script>
 <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/MyMath.js'></script><script  src="./script.js"></script>
+
+<!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+// Simple Audio Player control
+const bgMusic = document.getElementById('background-music');
+const audioSource = document.getElementById('audio-source');
+bgMusic.volume = 0.3; // Set volume to 30%
+
+// Handle file upload
+document.addEventListener('DOMContentLoaded', function() {
+	const fileInput = document.getElementById('music-file-input');
+	const urlInput = document.getElementById('music-url-input');
+	const loadBtn = document.getElementById('load-music-btn');
+	
+	// Handle file selection
+	if (fileInput) {
+		fileInput.addEventListener('change', function(e) {
+			const file = e.target.files[0];
+			if (file) {
+				// Check if it's an audio file
+				if (!file.type.startsWith('audio/')) {
+					alert('Please select an audio file');
+					return;
+				}
+				
+				// Create object URL from file
+				const fileURL = URL.createObjectURL(file);
+				
+				// Load the audio
+				bgMusic.src = fileURL;
+				bgMusic.load();
+				
+				console.log('Music file loaded:', file.name);
+				alert('Music loaded: ' + file.name + '\nClick sound button to play!');
+				
+				// If sound is already enabled, play it
+				if (typeof soundEnabledSelector !== 'undefined' && soundEnabledSelector()) {
+					bgMusic.play().catch(err => console.log('Play failed:', err));
+				}
+			}
+		});
+	}
+	
+	// Handle URL loading
+	if (loadBtn && urlInput) {
+		loadBtn.addEventListener('click', function() {
+			const url = urlInput.value.trim();
+			if (!url) {
+				alert('Please enter a music URL');
+				return;
+			}
+			
+			// Load the audio from URL
+			bgMusic.src = url;
+			bgMusic.load();
+			
+			console.log('Music URL loaded:', url);
+			alert('Music loaded from URL!\nClick sound button to play!');
+			
+			// If sound is already enabled, play it
+			if (typeof soundEnabledSelector !== 'undefined' && soundEnabledSelector()) {
+				bgMusic.play().catch(err => console.log('Play failed:', err));
+			}
+		});
+		
+		// Allow Enter key
+		urlInput.addEventListener('keypress', function(e) {
+			if (e.key === 'Enter') {
+				e.preventDefault();
+				loadBtn.click();
+			}
+		});
+	}
+});
+
+// Wait for store to be available
+function initMusicControl() {
+	if (typeof store === 'undefined' || typeof soundEnabledSelector === 'undefined' || typeof isRunning === 'undefined') {
+		setTimeout(initMusicControl, 100);
+		return;
+	}
+	
+	console.log('Music control initialized');
+	
+	// Listen for sound state changes
+	store.subscribe((state, prevState) => {
+		const soundEnabled = soundEnabledSelector(state);
+		const wasSoundEnabled = soundEnabledSelector(prevState);
+		
+		if (soundEnabled !== wasSoundEnabled) {
+			console.log('Sound toggled:', soundEnabled);
+			if (soundEnabled) {
+				bgMusic.play().catch(err => console.log('Play failed:', err));
+			} else {
+				bgMusic.pause();
+			}
+		}
+		
+		// Also handle pause/play state
+		const running = isRunning(state);
+		const wasRunning = isRunning(prevState);
+		
+		if (running !== wasRunning && soundEnabled) {
+			console.log('Running state changed:', running);
+			if (running) {
+				bgMusic.play().catch(err => console.log('Play failed:', err));
+			} else {
+				bgMusic.pause();
+			}
+		}
+	});
+}
+
+// Start initialization
+initMusicControl();
+
+// Handle greeting button and modal
+const greetingBtn = document.querySelector('.greeting-btn');
+const greetingModal = document.querySelector('.greeting-modal');
+const greetingOverlay = document.querySelector('.greeting-modal__overlay');
+const greetingCloseBtn = document.querySelector('.greeting-modal__close-btn');
+
+if (greetingBtn && greetingModal) {
+	// Open modal
+	greetingBtn.addEventListener('click', function() {
+		greetingModal.classList.add('active');
+	});
+	
+	// Close modal
+	const closeModal = () => greetingModal.classList.remove('active');
+	
+	if (greetingCloseBtn) {
+		greetingCloseBtn.addEventListener('click', closeModal);
+	}
+	
+	if (greetingOverlay) {
+		greetingOverlay.addEventListener('click', closeModal);
+	}
+}
+</script>
 
 </body>
 </html>
