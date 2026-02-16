@@ -168,8 +168,9 @@ body {
 }
 
 .splash-subtitle {
-  font-family: 'Russo One', arial, sans-serif;
-  font-size: 1.5em;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.8em;
+  font-weight: 600;
   color: rgba(255, 215, 0, 0.9);
   margin-bottom: 40px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
@@ -177,15 +178,16 @@ body {
 
 .splash-btn {
   padding: 20px 50px;
-  font-family: 'Russo One', arial, sans-serif;
-  font-size: 1.5em;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.8em;
+  font-weight: 700;
   color: white;
   background: linear-gradient(135deg, rgba(220, 20, 20, 0.9), rgba(255, 180, 0, 0.9));
   border: 3px solid rgba(255, 215, 0, 1);
   border-radius: 50px;
   cursor: pointer;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-transform: none;
   box-shadow: 0 8px 25px rgba(220, 20, 20, 0.6), 0 0 40px rgba(255, 215, 0, 0.4);
   transition: all 0.3s ease;
   animation: pulse 2s ease-in-out infinite;
@@ -197,9 +199,10 @@ body {
 }
 
 .splash-note {
-  font-family: 'Russo One', arial, sans-serif;
-  font-size: 0.9em;
-  color: rgba(255, 255, 255, 0.6);
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
   margin-top: 20px;
 }
 
@@ -218,12 +221,16 @@ body {
   }
   
   .splash-subtitle {
-    font-size: 1.2em;
+    font-size: 1.5em;
   }
   
   .splash-btn {
-    font-size: 1.2em;
+    font-size: 1.5em;
     padding: 15px 40px;
+  }
+  
+  .splash-note {
+    font-size: 1em;
   }
 }
 
@@ -233,12 +240,16 @@ body {
   }
   
   .splash-subtitle {
-    font-size: 1em;
+    font-size: 1.2em;
   }
   
   .splash-btn {
-    font-size: 1em;
+    font-size: 1.2em;
     padding: 12px 30px;
+  }
+  
+  .splash-note {
+    font-size: 0.9em;
   }
   
   .splash-content {
@@ -256,15 +267,16 @@ body {
 
 .greeting-btn {
   padding: 12px 30px;
-  font-family: 'Russo One', arial, sans-serif;
-  font-size: 1.1em;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.4em;
+  font-weight: 700;
   color: white;
   background: linear-gradient(135deg, rgba(220, 20, 20, 0.8), rgba(255, 180, 0, 0.8));
   border: 2px solid rgba(255, 215, 0, 0.8);
   border-radius: 25px;
   cursor: pointer;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-transform: none;
   box-shadow: 0 4px 15px rgba(220, 20, 20, 0.5);
   transition: all 0.3s ease;
 }
@@ -375,9 +387,9 @@ body {
 }
 
 .donate-title {
-  font-family: 'Russo One', arial, sans-serif !important;
-  font-size: 1.3em !important;
-  font-weight: bold !important;
+  font-family: 'Dancing Script', cursive !important;
+  font-size: 1.5em !important;
+  font-weight: 700 !important;
   color: rgba(255, 215, 0, 1) !important;
   margin-bottom: 10px !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9) !important;
@@ -487,7 +499,7 @@ body {
 
 @media (max-width: 840px) {
   .greeting-btn {
-    font-size: 0.9em;
+    font-size: 1.2em;
     padding: 10px 25px;
   }
   
@@ -526,7 +538,7 @@ body {
   }
   
   .donate-title {
-    font-size: 1.1em !important;
+    font-size: 1.3em !important;
   }
   
   .donate-alias {
@@ -543,7 +555,7 @@ body {
 
 @media (max-width: 480px) {
   .greeting-btn {
-    font-size: 0.8em;
+    font-size: 1em;
     padding: 8px 20px;
     bottom: 30px;
   }
@@ -567,7 +579,7 @@ body {
   }
   
   .donate-title {
-    font-size: 1em !important;
+    font-size: 1.2em !important;
   }
   
   .donate-alias {
