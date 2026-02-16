@@ -1,5 +1,6 @@
 'use strict';
 console.clear();
+console.log('Script.js loaded successfully!');
 
 const IS_MOBILE = window.innerWidth <= 640;
 const IS_DESKTOP = window.innerWidth > 800;

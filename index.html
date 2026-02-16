@@ -48,6 +48,16 @@
 	<source id="audio-source" src="music/Happy New Year.mp3" type="audio/mpeg">
 </audio>
 
+<!-- Splash Screen -->
+<div class="splash-screen">
+	<div class="splash-content">
+		<h1 class="splash-title">Happy Lunar New Year</h1>
+		<p class="splash-subtitle">Chúc Mừng Năm Mới Bính Ngọ 2025</p>
+		<button class="splash-btn">🎆 BẮT ĐẦU 🎆</button>
+		<p class="splash-note">Click để xem pháo hoa và nghe nhạc</p>
+	</div>
+</div>
+
 <!-- App -->
 <div class="container">
 	<div class="loading-init">
@@ -293,6 +303,30 @@ function initMusicControl() {
 
 // Start initialization
 initMusicControl();
+
+// Handle splash screen
+const splashScreen = document.querySelector('.splash-screen');
+const splashBtn = document.querySelector('.splash-btn');
+
+if (splashScreen && splashBtn) {
+	splashBtn.addEventListener('click', function() {
+		// Hide splash screen
+		splashScreen.classList.add('hidden');
+		
+		// Enable sound
+		store.setState({ soundEnabled: true });
+		
+		// Start playing music
+		bgMusic.play().catch(err => console.log('Music play failed:', err));
+		
+		// Unpause if paused
+		if (store.state.paused) {
+			togglePause(false);
+		}
+		
+		console.log('Splash screen dismissed, sound enabled');
+	});
+}
 
 // Handle greeting button and modal
 const greetingBtn = document.querySelector('.greeting-btn');
